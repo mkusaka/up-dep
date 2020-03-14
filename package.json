@@ -1,9 +1,9 @@
 {
   "name": "up-dep",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "./lib/index.js",
   "bin": {
-    "pizza": "./lib/index.js"
+    "up-dep": "./lib/index.js"
   },
   "repository": "https://github.com/mkusaka/up-dep.git",
   "author": "mkusaka <hinoshita1992@gmail.com>",
@@ -29,7 +29,7 @@
     "create": "yarn test && yarn build",
     "build": "tsc -p .",
     "watch": "tsc -p . --watch",
-    "test": "npm i -g . && pizza",
+    "test": "npm i -g . && up-dep",
     "rr": "yarn build && node .",
     "clean:dep": "rm -rf ./node_modules && yarn"
   }

@@ -5,11 +5,6 @@ import clear from "clear";
 import figlet from "figlet";
 import program from "commander";
 
-clear();
-console.log(
-  chalk.red(figlet.textSync("pizza-cli", { horizontalLayout: "full" }))
-);
-
 program
   .version("0.0.1")
   .description("example cli")
@@ -21,5 +16,12 @@ program
   .parse(process.argv);
 
 if (!process.argv.slice(2).length) {
+  clear();
+
+  console.log(
+    chalk.green(figlet.textSync("up-dep", { horizontalLayout: "full" }))
+  );
   program.help();
 }
+
+if (program.cheese) console.log(program.cheese);
