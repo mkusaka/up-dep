@@ -4,15 +4,17 @@ import chalk from "chalk";
 import clear from "clear";
 import figlet from "figlet";
 import program from "commander";
+import path from "path";
 
 program
   .version("0.0.1")
-  .description("example cli")
-  .option("-p, --peppers", "add peppers")
-  .option("-P, --pineapple", "Add pineapple")
-  .option("-b, --bbq", "Add bbq sauce")
-  .option("-c, --cheese <type>", "Add the specified type of cheese [marble]")
-  .option("-C, --no-cheese", "You do not want any cheese")
+  .description("safe dependency update detect cli")
+  .option(
+    "-p, --package <dir>",
+    "specify package.json path",
+    path.resolve(__dirname)
+  )
+  .option("-b, --dir <dir>", "specify bundled dir", path.resolve("dist"))
   .parse(process.argv);
 
 if (!process.argv.slice(2).length) {
@@ -24,4 +26,5 @@ if (!process.argv.slice(2).length) {
   program.help();
 }
 
-if (program.cheese) console.log(program.cheese);
+if (program.package) console.log(program.package);
+if (program.dir) console.log(program.dir);
