@@ -32,6 +32,7 @@
     "typesync": "^0.6.1"
   },
   "scripts": {
+    "private:publish": "npm publish --access=public",
     "start": "nodemon --watch 'src/**/*/ts' --exec 'ts-node' src/index.ts",
     "create": "yarn test && yarn build",
     "build": "tsc -p .",
