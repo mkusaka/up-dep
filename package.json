@@ -1,5 +1,5 @@
 {
-  "name": "up-dep",
+  "name": "@mkusaka/up-dep",
   "version": "0.0.1",
   "main": "./lib/index.js",
   "bin": {
