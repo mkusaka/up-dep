@@ -38,7 +38,8 @@
     "watch": "tsc -p . --watch",
     "test": "npm i -g . && up-dep",
     "rr": "yarn build && node .",
-    "clean:dep": "rm -rf ./node_modules && yarn"
+    "clean:dep": "rm -rf ./node_modules && yarn",
+    "lint": "eslint --fix src/**/*.ts"
   },
   "husky": {
     "hooks": {
