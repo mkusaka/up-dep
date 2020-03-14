@@ -18,13 +18,14 @@ program
   .version("0.0.1")
   .description("safe dependency update detect cli")
   .option(
-    "-b, --bundledir <dir>",
+    "-d, --bundledir <dir>",
     "specify bundler's output dir",
     path.resolve("dist")
   )
   .option("-c, --cmd <cmd>", "specify command to generate bundle asset")
   .option("-C, --clean <cmd>", "specify clean cache command")
   .option("-l, --latest", "upgrade latest or not(semver latest) flag")
+  .option("-i, --ignore <packages>", "specify ignore package names split with `,`.")
   .parse(process.argv);
 
 if (!process.argv.slice(2).length) {
@@ -49,6 +50,7 @@ const cleanCommand = program.clean;
 const buildCommand = program.cmd;
 const outdatedDetectCommand = "yarn outdated --json";
 const updateLatest = program.latest;
+const ignorePackages = (program.ignore as string).split(',');
 
 let output = null;
 
@@ -85,7 +87,9 @@ const to = (body: Table["data"]["body"][0]) => {
   };
 };
 
-const bodies = outdated.data.body.map(pkg => to(pkg));
+const bodies = outdated.data.body
+  .map(pkg => to(pkg))
+  .filter(e => ignorePackages.includes(e.package));
 
 if (cleanCommand) {
   logExecSync(cleanCommand);
