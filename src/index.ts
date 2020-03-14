@@ -106,7 +106,9 @@ if (updateLatest) {
     }
 
     logExecSync("yarn install --network-timeout 1000000000  --check-file");
-    logExecSync(`yarn upgrade ${e.package} --latest`);
+    logExecSync(
+      `yarn upgrade ${e.package} --latest --network-timeout 1000000000`
+    );
     logExecSync(buildCommand);
     const packageTmpDir = mkdtempSync(`${e.package}${e.wanted}`);
     logExecSync(`mv ${bundleDir}/* ${packageTmpDir}/`);
@@ -119,7 +121,9 @@ if (updateLatest) {
     }
 
     logExecSync("yarn install --network-timeout 1000000000  --check-file");
-    logExecSync(`yarn upgrade ${e.package}@${e.wanted}`);
+    logExecSync(
+      `yarn upgrade ${e.package}@${e.wanted} --network-timeout 1000000000`
+    );
     logExecSync(buildCommand);
     const packageTmpDir = mkdtempSync(`${e.package}${e.wanted}`);
     logExecSync(`mv ${bundleDir}/* ${packageTmpDir}/`);
