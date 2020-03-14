@@ -17,3 +17,8 @@ you can specify clean command
 ```
 up-dep -c 'yarn build' -b 'dist' -C 'yarn cache clean && rm -rf node_modules'
 ```
+
+latest update check
+```
+up-dep -c 'yarn build' -b 'dist' -l
+```
