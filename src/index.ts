@@ -90,7 +90,7 @@ const bodies = outdated.data.body.map(pkg => to(pkg));
 if (cleanCommand) {
   logExecSync(cleanCommand);
 }
-logExecSync("yarn install --check-file");
+logExecSync("yarn install --network-timeout 1000000000  --check-file");
 logExecSync(buildCommand);
 const rootTmpDir = mkdtempSync("root");
 logExecSync(`mv ${bundleDir}/* ${rootTmpDir}/`);
@@ -101,7 +101,7 @@ if (updateLatest) {
       logExecSync(cleanCommand);
     }
 
-    logExecSync("yarn install --check-file");
+    logExecSync("yarn install --network-timeout 1000000000  --check-file");
     logExecSync(`yarn upgrade ${e.package} --latest`);
     logExecSync(buildCommand);
     const packageTmpDir = mkdtempSync(`${e.package}${e.wanted}`);
@@ -114,7 +114,7 @@ if (updateLatest) {
       execSync(cleanCommand);
     }
 
-    logExecSync("yarn install --check-file");
+    logExecSync("yarn install --network-timeout 1000000000  --check-file");
     logExecSync(`yarn upgrade ${e.package}@${e.wanted}`);
     logExecSync(buildCommand);
     const packageTmpDir = mkdtempSync(`${e.package}${e.wanted}`);
