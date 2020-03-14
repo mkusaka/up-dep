@@ -29,7 +29,9 @@
     "start": "nodemon --watch 'src/**/*/ts' --exec 'ts-node' src/index.ts",
     "create": "yarn test && yarn build",
     "build": "tsc -p .",
+    "watch": "tsc -p . --watch",
     "test": "npm i -g . && pizza",
+    "rr": "yarn build && node .",
     "clean:dep": "rm -rf ./node_modules && yarn"
   }
 }
