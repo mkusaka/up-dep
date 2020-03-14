@@ -25,7 +25,10 @@ program
   .option("-c, --cmd <cmd>", "specify command to generate bundle asset")
   .option("-C, --clean <cmd>", "specify clean cache command")
   .option("-l, --latest", "upgrade latest or not(semver latest) flag")
-  .option("-i, --ignore <packages>", "specify ignore package names split with `,`.")
+  .option(
+    "-i, --ignore <packages>",
+    "specify ignore package names split with `,`."
+  )
   .parse(process.argv);
 
 if (!process.argv.slice(2).length) {
@@ -50,7 +53,7 @@ const cleanCommand = program.clean;
 const buildCommand = program.cmd;
 const outdatedDetectCommand = "yarn outdated --json";
 const updateLatest = program.latest;
-const ignorePackages = (program.ignore as string).split(',');
+const ignorePackages = (program.ignore as string).split(",");
 
 let output = null;
 
@@ -99,36 +102,31 @@ logExecSync(buildCommand);
 const rootTmpDir = mkdtempSync("root");
 logExecSync(`mv ${bundleDir}/* ${rootTmpDir}/`);
 
-if (updateLatest) {
-  bodies.forEach(e => {
-    if (cleanCommand) {
-      logExecSync(cleanCommand);
-    }
+bodies.forEach(e => {
+  if (cleanCommand) {
+    logExecSync(cleanCommand);
+  }
 
-    logExecSync("yarn install --network-timeout 1000000000  --check-file");
-    logExecSync(
-      `yarn upgrade ${e.package} --latest --network-timeout 1000000000`
-    );
-    logExecSync(buildCommand);
-    const packageTmpDir = mkdtempSync(`${e.package}${e.wanted}`);
-    logExecSync(`mv ${bundleDir}/* ${packageTmpDir}/`);
-    logExecSync("git reset --hard HEAD");
-  });
-} else {
-  bodies.forEach(e => {
-    if (cleanCommand) {
-      execSync(cleanCommand);
-    }
+  logExecSync("yarn install --network-timeout 1000000000  --check-file");
+  try {
 
-    logExecSync("yarn install --network-timeout 1000000000  --check-file");
+  if (updateLatest) {
     logExecSync(
-      `yarn upgrade ${e.package}@${e.wanted} --network-timeout 1000000000`
-    );
-    logExecSync(buildCommand);
-    const packageTmpDir = mkdtempSync(`${e.package}${e.wanted}`);
-    logExecSync(`mv ${bundleDir}/* ${packageTmpDir}/`);
-    logExecSync("git reset --hard HEAD");
-  });
-}
+        `yarn upgrade ${e.package} --latest --network-timeout 1000000000`
+      );
+    } else {
+      logExecSync(
+        `yarn upgrade ${e.package}@${e.wanted} --network-timeout 1000000000`
+      );
+    }
+  } catch (err) {
+    console.log(`error occur ${e.package}`)
+  }
+
+  logExecSync(buildCommand);
+  const packageTmpDir = mkdtempSync(`${e.package}${e.wanted}`);
+  logExecSync(`mv ${bundleDir}/* ${packageTmpDir}/`);
+  logExecSync("git reset --hard HEAD");
+});
 
 console.log("finish");
